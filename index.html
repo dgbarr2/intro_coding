@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    
+    
+    
+    <title>Introduction to Coding</title>
+  </head>
+  <style>
+    div.root {
+      font-size: 20px;
+    }
+    </style>
+
+  <body>
+    <p id="demo"></p>
+    <div style="background-color:lightblue"><h1> A very short introduction to coding.</h1></div>
+    <div class="root" >
+        <h2>How to use these notes</h2>
+        These notes include just the main points that we will cover during the lecture sessions. They are not detailed enough to serve as a standalone tutorial, largely because they do not explain what you should do if something goes wrong or does not work - these things we will cover during the sessions. 
+        <h2>Setting up the coding window.</h2>
+        <ol>
+            <li>Click the 3 vertical dots at the top right corner.</li>
+            <li>Click 'More tools'.</li>
+            <li> Click 'Developer tools'.</li>
+            <li>On the menu bar at the top of the new window that has (or should have) opened on the right, click 'Console'. </li>
+            <li>Drag the left hand border of the window to the left to widen it.</li>
+        </ol>
+        <h2>Telling it what to  do...</h2>
+        <ol>
+            <li>You can enter instructions on the line with a blue rightward arrowhead.</li>
+            <img src="console_blueArrow.png" alt="Italian Trulli"><br><br>
+            <li>Here we tell it that a variable called 'data' should have the value 10 by typing 'data = 10' after the blue arrow and hitting 'enter'. Chrome reponds by echoing this back on the line with a '<-', and turning the blue arrow to grey to indicate that the instruction has been dealt with (or 'executed').</li>
+            <img src="console_dataEquals10.png" alt="Italian Trulli"><br><br>
+            <li>This is a screenshot of a set of instructions - those that have been executed are indicated by a grey arrow, with Chrome's response on the 'next' line and indicated by a leftward arrow. Enter the instructions one-by-one to replicate these lines - if you make a mistake just enter the corrected version next to the blue arrow when it reappears.</li>
+            <img src="console_dataSquared.png" alt="Italian Trulli"><br><br>
+        <li> Now we add a simple function, f(x) = x * x (just continue by adding these lines to those you already have - we don't repeat the earlier ones here but they should still be in your console window).</li>
+    
+    <img src="console_functionXsquared.png" alt="Italian Trulli"><br><br>
+    <li> And this is another, g(x)=  x * 100.</li>
+    <img src="console_functionTimes100.png" alt="Italian Trulli"><br><br>
+    <li> Now we tell Chrome how to calculate an approximation to the gradient of our function f(x).</li>
+    <img src="console_gradientXsquared.png" alt="Italian Trulli"><br><br>
+<ul>
+    <li>We know that the formula for the exact gradient is f'(x)=2x, so the numerical gradient for this example is 10. As h gets smaller in the lines above, the result converges on 10 as the presentation slides predict.</li></ul><br><br>
+
+  <li>Now we get Chrome to give us something more descriptive.</li>
+  <img src="console_gradientWithText1.png" alt="Italian Trulli"><br><br>
+  <li>To get your results echoed to the notes on this side of the screen enter the following:</li>
+  <img src="console_printToHTML.png" width="600" height="30" alt="Italian Trulli"><br><br>
+
+  <p id="userResult">Your result will appear here.</p>
+  <li> Adding a `loop' to repeat an instruction many times. ('console.log(...)' echoes the result back to the screen in a way that is more useful than using 'return' here.)</li>
+  <img src="console_simpleForLoop.png" width="450" height="200" alt="Italian Trulli"><br><br>
+  <li>We can get this to produce several approximations to the gradient with the following:</li>
+  <img src="console_gradientForLoop.png" width="600" height="250" alt="Italian Trulli">
+
+  <!--
+    <img src="console_loopPlusCreateArray.png" width="600" height="500" alt="Italian Trulli">
+
+
+
+<li> Now add two circle graphic from https://jsfiddle.net/microbians/8ztNU/</li>
+  -->
+</ol>
+    </div>
+    <!-- <div id="div1">Text above was created dynamically.</div> -->
+    <div style="background-color:lightblue"><h1> Notes end here.</h1></div>
+
+    <div id='intro'>
+        <svg>
+        //draw some svg elements
+        </svg>
+        </div>
+  </body>
+</html>
