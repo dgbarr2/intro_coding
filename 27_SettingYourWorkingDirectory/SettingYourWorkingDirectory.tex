@@ -1,0 +1,71 @@
+\documentclass[12pt]{article}
+
+\newcommand{\EventTitle}{Foundation Year, Coding in R}
+\newcommand{\PresentationTitle}{5. Setting your working directory}
+\newcommand{\EventDate}{May 2020}
+
+\input{C:/Users/320709/Documents/FY2019-20/FY2020_Rcourse/Presentations/IndividualSessions/templates//templateForSlides}
+
+
+\newpage
+	
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+
+\LARGE
+
+\vspace{0.3in}
+
+\section{Set up.}
+\begin{itemize}
+	\item Copy the file \textcolor{red}{setWorkingDirectory.R} to your /courseCode and /myCodeAndData folders and rename the latter as mySetWorkingDirectory.R (Remember that you won't see the `.R' extension and that you don't have to type it either.)
+\end{itemize}
+
+\section{Why create a working directory?}
+\begin{itemize}
+	\item R has to be told where to find any code or data files that you want to load into R Studio, and where to save anything that you want to keep.
+	\item It has a default location, which is your Documents folder, but it is good practice not to use this since it can get cluttered with files from many applications.
+	\item You will find  it much easier to find your files if you do not use the Documents folder to keep them in.
+\newpage
+	\item Using the basic folder structure that we looked at in SettingUpYourFolders is an improvement on using Documents, but you may want to set up your own folders for specific sessions or projects (although this is probably not a good idea until you have gained some experience with R).
+\end{itemize}
+
+\section{How?}
+
+\begin{itemize}
+	\item When you open R Studio it will default to using the Documents folder (there are ways to prevent this but we'll keep things simple for now).
+	\item So at the start of each session (i.e. each time you open R Studio) you should execute the following line of code:
+\begin{lstlisting}
+setwd("C:/Users/320709/Documents/FY_Rcourse/myCodeAndData")
+\end{lstlisting}
+	   \textcolor{red}{with 320709 replaced by your own Bank id number}.
+\newpage
+	\item You can do this in any of 3 ways:
+	\begin{enumerate}
+		\item Type the code (or copy, paste and change the id number) into the console and hit enter.
+		\item Type the code into an R file (create a new one, or add it to the start of an existing one) and, with the curser on this new code line, hit $<$ctrl$>$ + $<$enter$>$.
+				\newpage
+		\item Open an R file that already has this code in it and execute the line or the whole file ($<$ctrl$>$ + $<$shift$>$ +  $<$enter$>$).
+		\begin{itemize}
+
+			\item You can use the setMyWorkingDirectory.R file (in your courseCode directory) for this, after editing it to replace 320709 with our own Bank ID.
+		\end{itemize}
+	\end{enumerate}
+	\item You can check that you have the correct working directory by entering
+\begin{lstlisting}
+getwd()
+\end{lstlisting}
+	in the Console.	
+	\item Finally, you only have to run setwd(...) once in each R session. If you accidentally run it again it doesn't matter though since you're just telling R something it already knows.
+\end{itemize}
+
+\section{What effect does setting the working directory have?}
+
+\begin{itemize}
+	\item If you click `Find$>$Open file' you will be taken directly to the working directory instead of Documents.
+	\item Your own code will eventually include lines to load some data: after setting the working directory you can do this using just the data file's name instead of having to type its full location.
+	\item The same applies to saving any output; any `save' command will put the output in the working directory instead of in Documents.
+\end{itemize}
+
+ 
+\end{document}
