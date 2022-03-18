@@ -1,0 +1,344 @@
+\documentclass[12pt]{article}
+
+\newcommand{\EventTitle}{Foundation Year, Coding in R}
+\newcommand{\PresentationTitle}{7. Graphing your data}
+\newcommand{\EventDate}{May 2020}
+
+\input{C:/Users/320709/Documents/FY2019-20/FY2020_Rcourse/Presentations/IndividualSessions/templates/templateForSlides}
+
+
+\newpage
+	
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+	\newpage
+\LARGE
+
+
+
+
+\section{Setting up.}
+\begin{itemize}
+	\item We shall work throught the file \textcolor{red}{FY\_MPol\_graphData.R} which you should copy to your /courseCode folder.
+	\begin{itemize}
+		\item This will appear as \textcolor{red}{ImportingData\_CSVfiles} in  /courseCode i.e. Windows doesn't show the `.R' extension.
+		\item Check in the `Type' column of the folders file list to be sure you have the correct file - it should read `R file'.
+	\end{itemize}
+	\item Copy the file from your  /courseCode to folder  /myCodeAndData and rename it `myFY\_MPol\_graphData.R'.
+\newpage
+	\item The data we will work with are in the file \textcolor{red}{FY\_MPol\_Data.csv} which you should copy into your /courseData folder where it  will appear as \textcolor{red}{FY\_MPol\_Data} i.e. Windows will not show the .csv extension. Copy this file to  /myCodeAndData (no need to rename this one).
+	\newpage
+\item Then...
+\begin{enumerate}
+	\item Start R studio.
+	\item Set your working directory with
+	\begin{lstlisting}
+setwd("C:/Users/[your number]/Documents/FY_Rcourse/myCodeAndData")
+\end{lstlisting}
+as explained in the `5. Setting your working directory' slides.
+\item Either:
+\begin{enumerate}
+	\item Create a new file in R Studio (call it whatever you like) then type (or copy and paste if you're feeling lazy)  the lines from these slides 1 at a time as you read through the text. Or...
+	\newpage
+	\item Open your file `myFY\_MPol\_Data' (File $>$ Open File) and execute the lines 1 by 1 (with ctrl + enter) as you read through the text. 
+\end{enumerate}
+\end{enumerate}
+\end{itemize}
+
+
+\section{Installing some packages.}
+\label{section:installGgplot}
+\begin{itemize}
+	\item The basic version of R can do a lot of the things that we would want to do in the Bank but there are some add-ons that can do these things better. Something called `ggplot' can produce much better graphs than the basic R can.
+	\item We have to install these add-ons, called `packages'. We do this just once and they go into the computer's memory just as R Studio does.
+	\item The instruction to install ggplot is:
+\begin{lstlisting}
+install.packages("ggplot2'')
+\end{lstlisting}
+	\item Copy this instruction and paste it next to the blue \textcolor{blue}{$>$}  in the Console  of R Studio and hit $<$enter$>$.
+	\item R will then perform the installation, this may take several minutes and you'll see a lot of text appear intermittently in the console while it is doing it.
+	\item When the  \textcolor{blue}{$>$} reappears you can move to the next section of these notes.
+\end{itemize}
+
+\section{Start with some notes, then import the data.}
+\begin{itemize}
+		\item First we see the introductory notes that identify the program and explain what it does.
+\begin{lstlisting}
+#
+# FY_MPol_graphData.R
+#
+# Import data from a csv file and 
+# use it to draw some graphs with ggplot.
+#
+# DGB Mar 2020
+#
+\end{lstlisting}
+\newpage
+	\item Then we have some more notes, this time telling us about the data. 
+\begin{lstlisting}
+#  We import the following US data series
+#  from the file FY_MPol_Data.csv:
+#
+#  Money supply (narrow) m1  
+#  Money supply (broad) m3
+#  Prices, p: consumer price index
+#  Short rate(1), rs: 3-month T Bill rate
+#  Short rate(2), rff: Fed Funds rate
+#  Long rates, rl: 10-year interest rate (yield on 10-year gov bonds)
+#  Output, y: Industrial production
+#  Unemployment, u: Unemployment rate
+#
+\end{lstlisting}
+\newpage
+\item Now we have the first line of R code, with a note explaining what it does. While you are learning R it is a good idea to include this line at the start of all your programs.
+\begin{lstlisting}
+rm(list = ls())  
+               # This line clears R's memory of data so
+               # that we start from a clean slate for this
+               # program with nothing hanging around
+               # from any programs we ran earlier.
+\end{lstlisting}
+
+	\item Now we import the data as in the previous session. This time we are using genuine data instead of the toy stuff we used before. 
+\begin{lstlisting}
+#
+# Import the data into a data frame, which we will call mpdata.
+#
+
+mpdata <- read.csv("FY_MPol_Data.csv", header=TRUE)
+\end{lstlisting}
+
+	\item Have a look at what we've imported,  just to check that we have what we expected.
+\begin{lstlisting}	
+mpdata[1,]  # Print the first line of the data (plus the header)
+				  # to the console.
+\end{lstlisting}
+\lstinputlisting[language=R, backgroundcolor=\color{lightgray}]{firstLineOfData.out}
+
+\newpage
+	\item R will print the first 6 lines of the data with the `head()' command...
+\begin{lstlisting}
+head(mpdata)  # This prints the first 6 lines (plus the header).
+\end{lstlisting}
+\lstinputlisting[language=R, backgroundcolor=\color{lightgray}]{headOfData.out}
+
+\newpage
+	\item Similarly for the final 6 lines using `tail()'
+\begin{lstlisting}
+tail(mpdata)  # And this prints the final 6 lines (plus the header).
+\end{lstlisting}
+\lstinputlisting[language=R, backgroundcolor=\color{lightgray}]{tailOfData.out}
+
+\newpage
+	\item Now that we have the data we start a new part of the code with a comment about what we are going to do. 
+	\begin{lstlisting}
+# --------------- Plot (1) p and m1, (2) The 3 interest rates
+\end{lstlisting}
+\newpage
+\item There are several ways to plot data in R. One of the best is by using the package ggplot. In the next line we tell R that we want to use ggplot with this program using the library() command. (If you get a message in the console saying that it can't find ggplot go back to Section \ref{section:installGgplot}.)
+
+
+\begin{lstlisting} 
+# Load ggplot from the library of packages on this laptop. 
+library("ggplot2")
+\end{lstlisting}
+
+\newpage
+	\item Next we have to do something that looks a little odd. R has a built in set of code that handles dates really well but we have to tell it that, for example, `1960-01-01' is actually a date and not just a string of numbers and dashes. We do this with the following line which makes R treat the  `date' column of mpdata as dates. (The data frame, mpdata, will look the same after this line is executed as it did before.)
+
+\begin{lstlisting}	 
+# Tell R to treat the `date' column as dates.
+mpdata[["date"]] <- as.Date(mpdata[["date"]])  
+\end{lstlisting}
+
+
+\newpage
+	\item Now, at last, we tell R to create a graph.
+\begin{lstlisting}
+ggplot(mpdata, aes(date)) + geom_line(aes(y=m1),colour="red") +
+                            geom_line(aes(y=p*10),colour="blue")
+\end{lstlisting}
+\begin{itemize}
+	\item Explaining what all this means would take some time so it's best to just accept that this line does the trick.
+	\item The first part tells R to use ggplot, and to get the data from our data frame `mpdata'. 
+	\item The `aes(date)' tells it what to put on the horizontal axis i.e. the `date' column from mpdata.
+	\item Then we get the code to draw the first line, which has y values equal to m1, and will be drawn in red.
+	\newpage
+	\item Finally we add a second line, with y values equal to $p \times 10$, written `p*10' (the $\times 10$ is just to scale up the values so that they look better in the graph when plotted next to the m1 values), and this one will be blue.
+\end{itemize}	
+	\item And this is what we get: (It will appear in the bottom right window of R Studio if all is well.)
+	\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{mpdataPlot_1.pdf}
+  			\caption{Output from ggplot of m1 and p*10.}
+  			\label{fig:mpdataPlot_1}
+  			\end{center}
+	\end{figure}         % --------------------------------------------------------------------------------------
+
+	\item The next line plots the 3 interest rates in mpdata.
+	\begin{lstlisting}
+ggplot(mpdata, aes(date)) + geom_line(aes(y=rs),colour="red") + 
+                            geom_line(aes(y=rl),colour="blue") +
+                            geom_line(aes(y=rff),colour="green")
+\end{lstlisting}
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{mpdataPlot_2.pdf}
+  			\caption{Output from ggplot of 3 interest rates.}
+  			\label{fig:mpdataPlot_1}
+  			\end{center}
+	\end{figure}         % --------------------------------------------------------------------------------------
+
+	\item Finally, we take control of the start and end dates of the graph.
+\begin{lstlisting}	
+# Plot a sub period 
+# (see https://www.neonscience.org/dc-time-series-plot-ggplot-r):
+
+startPlot <- as.Date("2011-01-01")
+endPlot <- as.Date("2019-01-01")
+
+plotDates <- c(startPlot, endPlot)
+plotDates
+
+\end{lstlisting}
+\begin{itemize}
+	\item The first two lines create 2 variables, which we choose to call startPlot and endPlot: they take a string of characters the {\em we} recognise as a date (2011-01-01) and tell R to treat it as a date too (just as we did earlier for the `date' column in mpdata).
+	\item We then combine these in a single variable called plotDates (our choice of name again) - ggplot has to be given both dates inside a single variable (it's just one of ggplot's rules).
+\end{itemize}
+\item Now we can get ggplot going again but this time we add\\  `(scale\_x\_date(limits=plotDates))' to give it the info about the start and end dates.
+\begin{lstlisting}
+ggplot(mpdata, aes(date)) + geom_line(aes(y=m1),colour="red") + 
+                          geom_line(aes(y=p*10),colour="blue") + 
+                          (scale_x_date(limits=plotDates))
+\end{lstlisting}
+
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{mpdataPlot_3.pdf}
+  			\caption{Short sample output from ggplot of m1 and p*10.}
+  			\label{fig:mpdataPlot_1}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+\end{itemize}
+
+\section{Finding your plots.}
+\begin{itemize}
+	\item You should now have 3 plots but you can only see one of the.
+	\item To see the others click on the back and forward arrows on the `Plots' pane.
+	\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/findOtherPlots.png}
+  			\caption{Moving between plots.}
+  			\label{fig:movingBetweenPlots}
+  			\end{center}
+\end{figure}  
+\end{itemize}
+\begin{center}That's all for now!\end{center}
+\end{document}
+
+
+\end{document}
+	
+\begin{lstlisting}
+#
+# importDataFromCSV.R
+# 
+# Import (or 'load') data from a CSV file.
+#
+# DGB Mar 2020
+#
+\end{lstlisting}
+
+\begin{lstlisting}
+#   Load data from csv with the top row of the csv used as column headers.
+monPolData <- read.csv("monPol_1.csv",header=TRUE)
+\end{lstlisting}
+
+
+	\item And this is what we get in the console:
+	\lstinputlisting[language=R]{monPolData.out}
+
+
+\section{A note on headers}
+\end{document}
+
+
+
+
+
+# Print just 1 column
+monPolData$bank
+
+# Print just 1 row (you'll get the header too)
+
+monPolData[1,]
+monPolData[2,]
+
+# Print just one element 
+monPolData[2,3]
+
+# How different do things look if we don't make the first line of the CSV file into a header in R?
+----------
+\begin{lstlisting}
+#   Load data from csv with the top row of the csv used as the first row of the columns with column headers added by R (as V#).
+monPolData_noHeader <- read.csv("monPol_1.csv",header=FALSE)
+\end{lstlisting}
+monPolData
+
+monPolData_noHeader
+
+
+# --------------- Load larger data set (from Radziwill book)
+
+# Load data from csv with variable names as headers from the top row of the csv.
+mnmData <- read.csv("mnm-clean.csv",header=TRUE)
+mnmData_noHeader <- read.csv("mnm-clean.csv",header=FALSE)
+
+# Look at the data...
+
+#       The whole dataset
+mnmData
+
+#       Just the first 6 rows
+head(mnmData)
+
+#       What difference does including a 'header' make?
+head(mnmData_noHeader)
+
+
+# Print one of the columns
+mnmData$student
+
+
+
+
+\section{Earlier text}
+
+
+\begin{enumerate}
+		\item Import data from a spreadsheet or a `Comma Separated Values' (CSV) file :
+		\begin{enumerate}
+			\item See the \href{https://www.datacamp.com/community/tutorials/r-data-import-tutorial#csv}{Datacamp site} for a comprehensive guide.
+			\item Spreadsheet \textcolor{red}{[mnm-clean.xlsx]}: Export the data as a CSV file \textcolor{red}{[mnm-clean.csv]}.  (File$$>$$Export$$>$$Change File Type$$>$$CSV (Comma delimited))
+			\item CSV:  \textcolor{red}{[importDataFromCSV.R]}
+		\end{enumerate}
+		\begin{figure}[H]
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/Excel_mnmData.png}
+  			\caption{Data in Excel.}
+  			\label{fig:dataExcel}
+  			\end{center}
+		\end{figure}
+		\begin{figure}[H]
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/R_mnmData.png}
+  			\caption{Data in R.}
+  			\label{fig:dataR}
+  			\end{center}
+		\end{figure}
+		\item Data imported in this way are stored in R in something called a `data frame'; more on what this means below.
+\end{enumerate}
+
+
+
+\end{document}

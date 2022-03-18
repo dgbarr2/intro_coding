@@ -1,0 +1,19 @@
+Call:
+lm(formula = p ~ m1, data = mpdata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-30.780 -13.003   2.961  10.460  27.509 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 2.331e+01  7.513e-01   31.02   <2e-16 ***
+m1          2.958e-02  5.348e-04   55.31   <2e-16 ***
+---
+Signif. codes:  
+0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ` 1
+
+Residual standard error: 13.59 on 716 degrees of freedom
+Multiple R-squared:  0.8103,	Adjusted R-squared:  0.8101 
+F-statistic:  3059 on 1 and 716 DF,  p-value: < 2.2e-16
+

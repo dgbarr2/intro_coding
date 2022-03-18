@@ -1,0 +1,295 @@
+\documentclass[12pt]{article}
+
+\newcommand{\EventTitle}{Foundation Year, Coding in R}
+\newcommand{\PresentationTitle}{6. Importing data.}
+\newcommand{\EventDate}{May 2020}
+
+\input{C:/Users/320709/Documents/FY2019-20/FY2020_Rcourse/Presentations/IndividualSessions/templates//templateForSlides}
+
+
+\newpage
+	
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+	\newpage
+\LARGE
+
+\newpage
+
+\section{Setting up.}
+\begin{itemize}
+	\item We shall work throught the file \textcolor{red}{ImportingData\_CSVfiles.R} which you should copy to your /courseCode folder.
+	\begin{itemize}
+		\item This will appear as \textcolor{red}{ImportingData\_CSVfiles} in  /courseCode i.e. Windows doesn't show the `.R' extension.
+		\item Check in the `Type' column of the folders file list to be sure you have the correct file - it should read `R file'.
+	\end{itemize}
+	\item Copy the file from your  /courseCode to folder  /myCodeAndData and rename it `myImportingData\_CSVfiles.R'.
+\newpage
+	\item The data we will load is in the file \textcolor{red}{monPol\_1.csv} which you should copy into your /courseData folder where it  will appear as \textcolor{red}{monPol\_1} i.e. Windows will not show the .csv extension. Copy this file to  /myCodeAndData (no need to rename this one).
+	\newpage
+\item Then...
+\begin{enumerate}
+	\item Start R studio.
+	\item Set your working directory with
+	\begin{lstlisting}
+setwd("C:/Users/[your number]/Documents/FY_Rcourse/myCodeAndData")
+\end{lstlisting}
+as explained in the `5. Setting your working directory' slides.
+\item Either:
+\begin{enumerate}
+	\item Create a new file in R Studio (call it whatever you like) then type (or copy and paste if you're feeling lazy)  the lines from these slides 1 at a time as you read through the text. Or...
+	\newpage
+	\item Open your file `myImportingData\_CSVfiles.R' (File $>$ Open File) and execute the lines 1 by 1 (with ctrl + enter) as you read through the text. 
+\end{enumerate}
+\end{enumerate}
+\end{itemize}
+
+
+\section{Importing the contents of a small CSV file.}
+
+\begin{itemize}
+	\item The program starts with some lines telling us its name, what it does, and who wrote it and when.
+	\item Lines beginning with a \# are `comment lines' - R ignores these when it executes the code.
+	\begin{itemize}
+		\item	It's good practice to start your code files this way because this information may be useful to other people or to you when you return to a file that you wrote months ago.
+	\end{itemize}
+	\newpage
+\begin{lstlisting}
+#
+# importingData_CSVfiles.R
+# 
+# Import (or `load') data from a CSV file.
+#
+# DGB Mar 2020
+#
+\end{lstlisting}
+
+\newpage
+	\item Next we get some reminders about how to execute the code. 
+	\begin{itemize}
+		\item Including additional notes can be useful sometimes. These particular notes are included here only because we are just starting with R.
+	\end{itemize}
+
+\begin{lstlisting}
+# To execute a single line place the cursor 
+#              on the line and hit <ctrl><enter>
+# To execute a block of lines, highlight them and hit <ctrl><enter>
+# To execute the whole file: <ctrl><shift><enter> 
+\end{lstlisting}
+
+	\item Now we have a note to tell us what the code is about to do.
+\begin{lstlisting}	
+# --------------- Load a small data set:
+\end{lstlisting}
+\newpage
+	\item And then we get to some actual code after all the comment lines.
+\begin{lstlisting}
+#   Load data from csv with the top row of the csv used 
+#           as column headers.
+monPolData <- read.csv("monPol_1.csv",header=TRUE)
+\end{lstlisting}
+\item So what is going on here?
+	\begin{itemize}
+		\item First there is a note in green, which we'll come back to below.
+		\item Then we get the R code in the line 
+\begin{lstlisting}
+monPolData <- read.csv("monPol_1.csv",header=TRUE)
+\end{lstlisting}
+		\item We're telling R to read a csv file with the name `monPol\_1.csv' and to place the contents of the file in its memory and call it `monPolData'.
+		\newpage
+		\item You might be more used to seeing this sort of instruction with an equals sign rather than an arrow.
+		\begin{itemize}
+			\item Using  `=' would work here too but you'll often see the arrow notation when looking at other people's code which is why we use it here.
+			\item What it is doing is telling R to create a space in its memory with the label `monPolData' and to put the data from the csv file into that space.
+			\item If we ask R to use this data later will we refer to it as `monPolData' and R knows to go and get the contents of this bit of its memory.
+			\item If you don't like the sound of all this, thinking of `monPolData' as the name of the data, or as a variable, works just fine.
+	\end{itemize}
+\newpage
+		\item When we read in a CSV like this the resulting variable has a particular form - it's called a \href{http://www.r-tutor.com/r-introduction/data-frame}{`data frame'}.
+		\item Data frames deserve a book to themselves but for now we just note that they are a very convenient way in which to keep our data.
+		\item R creates the variable `monPolData' in response to this line of code i.e. we don't have to create it in advance of importing the data.
+		\item `monPolData' will live inside R's memory: it will not appear in any of your folders since it is a data frame, not a file.
+	\end{itemize}
+\newpage
+	\item This is what our original csv file looks like in a text editor (Notepad), which makes the `comma separated variable' format obvious. {\em Note the variable names in the first row.}
+		\begin{figure}[H]
+			\begin{center}
+  			\includegraphics[width=0.6\linewidth]{ScreenShots/dataInNotepad.png}
+  			\caption{monPol\_1.csv in Notepad.}
+  			\label{fig:dataR}
+  			\end{center}
+		\end{figure}
+\newpage
+	\item Next we print our data frame in the console.
+\begin{lstlisting}
+# Print the data in the console.
+monPolData
+\end{lstlisting}
+	\begin{itemize}
+		\item To print something from R's memory in the console we don't have to tell R to `print' it, we just write its name on a line {\em on its own}.
+     \end{itemize}
+\newpage
+	\item This is what we get in the console:
+	\lstinputlisting[language=R, backgroundcolor=\color{lightgray}]{monPolData.out}
+	\begin{itemize}	
+		\item This is R's version of our CSV file. It has 4 numbered rows of data plus a header with a name for each of the columns.
+		\begin{itemize}
+			\item When we loaded the data the `header=TRUE' part told R to treat the first row of the csv file as the column headers.
+		\end{itemize}
+		\item The column names are useful because they will allow us to pull out individual columns by name, which is what we do next.
+	\end{itemize}
+\newpage
+	\item Print a single column to the console.
+\begin{lstlisting}
+# Print just 1 column
+monPolData$bank
+\end{lstlisting}
+	\begin{itemize}
+		\item The name before the \$ sign tells R which data frame we want to get the column from (we have only one of course); the one after it identifies the column.
+		\item As before, we do not have to instruct R to print, just writing the name like this is enough.
+\newpage
+		\item And this is what we get:
+		\lstinputlisting[language=R,backgroundcolor=\color{lightgray}]{monPolData_bank.out}
+		\item It doesn't look much like a column, but that's just how columns get printed in the console. The console cannot format what it prints - it just puts eveything in to a single line here.
+		\item The data are there though i.e. the `bank' column just contains the names of some countries (referring to the home of the central bank that set the rates in the second column).
+		\item You can ignore the line begining with `Levels:'.
+	\end{itemize}
+\newpage
+	\item Creating a variable out of a column.
+	\begin{lstlisting}
+	# Create a variable out of a column
+	r <- monPol$rate
+	\end{lstlisting}
+	\begin{itemize}
+		\item We use the same \$ notation as before but this time we tell R to put the column in a variable called `r'.
+		\item We can use this variable in may ways but for now we just print it to the console.
+\begin{lstlisting}
+# Print the new variable
+r
+\end{lstlisting}
+		 \item And we get:
+		 \lstinputlisting[language=R, backgroundcolor=\color{lightgray}]{r.out}
+%		\newpage
+%		 \item Note that we do not get any header information - the variable contains only the data from the numbered rows of the data frame.
+%		 \item This makes it much easier to work with later e.g. if we want to graph the variable we won't want the first observation to be a word (which would be `rate' in this case).
+		 \end{itemize}
+\newpage
+		 \item We can also pull out a single {\em row} to print or to use to create another variable.
+		 \item We do this twice in the next example, for rows 1 and 2.
+\begin{lstlisting}
+# Print just 1 row (you'll get the header too)
+
+monPolData[1,]
+monPolData[2,]
+\end{lstlisting}
+\begin{itemize}
+\item This gives us:
+\lstinputlisting[language=R, backgroundcolor=\color{lightgray}]{singleRows.out}
+\item Note that this is the output from 2 lines of code. Both outputs include the header from the data frame.
+\end{itemize}	
+	\item When we create a {\em variable} out of a {\em row from a data frame} what we get is another, smaller, data frame:
+\begin{lstlisting}
+# Create a variable/data-frame  from a single row.
+uk_data <- monPolData[1,]
+uk_data
+\end{lstlisting}
+\begin{itemize}
+	\item The first line of code creates the variable `ukData', the second prints it to the console. Which produces:
+	\lstinputlisting[language=R, backgroundcolor=\color{lightgray}]{smallerDataFrame.out}
+\end{itemize}
+\newpage
+	\item Finally on the subject of pulling data from a data frame, we can get hold of a single element.
+\begin{lstlisting}
+# Print just one element 
+monPolData[1,3]
+\end{lstlisting}
+	\begin{itemize}
+		\item Which shows up in the console as:
+		\lstinputlisting[language=R, backgroundcolor=\color{lightgray}]{singleElement.out}
+		\item I.e. from row 1 of the original data frame we get the data from column 3.
+		\item We could of course create a variable out of this too but we don't do so here.
+	\end{itemize}
+\end{itemize}
+
+
+\end{document}
+
+
+
+
+
+# Print just 1 column
+monPolData$bank
+
+# Print just 1 row (you'll get the header too)
+
+monPolData[1,]
+monPolData[2,]
+
+# Print just one element 
+monPolData[2,3]
+
+# How different do things look if we don't make the first line of the CSV file into a header in R?
+----------
+\begin{lstlisting}
+#   Load data from csv with the top row of the csv used as the first row of the columns with column headers added by R (as V#).
+monPolData_noHeader <- read.csv("monPol_1.csv",header=FALSE)
+\end{lstlisting}
+monPolData
+
+monPolData_noHeader
+
+
+# --------------- Load larger data set (from Radziwill book)
+
+# Load data from csv with variable names as headers from the top row of the csv.
+mnmData <- read.csv("mnm-clean.csv",header=TRUE)
+mnmData_noHeader <- read.csv("mnm-clean.csv",header=FALSE)
+
+# Look at the data...
+
+#       The whole dataset
+mnmData
+
+#       Just the first 6 rows
+head(mnmData)
+
+#       What difference does including a 'header' make?
+head(mnmData_noHeader)
+
+
+# Print one of the columns
+mnmData$student
+
+
+
+
+\section{Earlier text}
+
+
+\begin{enumerate}
+		\item Import data from a spreadsheet or a `Comma Separated Values' (CSV) file :
+		\begin{enumerate}
+			\item See the \href{https://www.datacamp.com/community/tutorials/r-data-import-tutorial#csv}{Datacamp site} for a comprehensive guide.
+			\item Spreadsheet \textcolor{red}{[mnm-clean.xlsx]}: Export the data as a CSV file \textcolor{red}{[mnm-clean.csv]}.  (File$$>$$Export$$>$$Change File Type$$>$$CSV (Comma delimited))
+			\item CSV:  \textcolor{red}{[importDataFromCSV.R]}
+		\end{enumerate}
+		\begin{figure}[H]
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/Excel_mnmData.png}
+  			\caption{Data in Excel.}
+  			\label{fig:dataExcel}
+  			\end{center}
+		\end{figure}
+		\begin{figure}[H]
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/R_mnmData.png}
+  			\caption{Data in R.}
+  			\label{fig:dataR}
+  			\end{center}
+		\end{figure}
+		\item Data imported in this way are stored in R in something called a `data frame'; more on what this means below.
+\end{enumerate}
+
+
+\end{document}

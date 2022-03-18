@@ -1,0 +1,456 @@
+\documentclass[12pt]{article}
+
+\newcommand{\EventTitle}{Foundation Year, Coding in R}
+\newcommand{\PresentationTitle}{8. Economics in R: Regression}
+\newcommand{\EventDate}{May 2020}
+
+\input{C:/Users/320709/Documents/FY2019-20/FY2020_Rcourse/Presentations/IndividualSessions/templates//templateForSlides}
+
+
+\newpage
+	
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+	\newpage
+\LARGE
+
+In these notes we will not be explaining all of the comment lines as we did in the previous set. This time we will focus only on the executable lines of R code.
+
+
+
+\section{Setting up.}
+\begin{itemize}
+	\item We shall work throught the file \textcolor{red}{FY\_MPol\_Regression.R} which you should copy to your /courseCode folder.
+	\begin{itemize}
+		\item This will appear as \textcolor{red}{FY\_MPol\_Regression} in  /courseCode i.e. Windows doesn't show the `.R' extension.
+		\item Check in the `Type' column of the folders file list to be sure you have the correct file - it should read `R file'.
+	\end{itemize}
+	\item Copy the file from your  /courseCode to folder  /myCodeAndData and rename it `myFY\_MPol\_Regression.R'. This is the version that we'll work on.
+\newpage
+	\item The data we will work with are in the file \textcolor{red}{FY\_MPol\_Data.csv} which you should copy (you may already have done this in the graphing session) into your /courseData folder where it  will appear as \textcolor{red}{FY\_MPol\_Data} i.e. Windows will not show the .csv extension. Copy this file to  /myCodeAndData (no need to rename this one).
+	\newpage
+\item Then...
+\begin{enumerate}
+	\item Start R studio.
+	\item Set your working directory with
+	\begin{lstlisting}
+setwd("C:/Users/[your number]/Documents/FY_Rcourse/myCodeAndData")
+\end{lstlisting}
+as explained in the `5. Setting your working directory' slides.
+\item Either:
+\begin{enumerate}
+	\item Create a new file in R Studio (call it whatever you like) then type (or copy and paste if you're feeling lazy)  the lines from these slides 1 at a time as you read through the text. Or...
+	\newpage
+	\item Open your file `myFY\_MPol\_Regression' (File $>$ Open File) and execute the lines 1 by 1 (with ctrl + enter) as you read through the text. 
+	\item The first line of code clears the memory as explained in the graphing session:
+\begin{lstlisting}	
+rm(list = ls()) # This line clears R's memory of data so that
+                # we start from a clean slate for this program
+                # with nothing hanging around from
+                # any programs we ran earlier.
+	\end{lstlisting}
+\end{enumerate}
+\end{enumerate}
+\end{itemize}
+
+\section{Estimating a simple `monetarist' equation.}
+
+\subsection{Load the data.}
+\begin{itemize}
+	\item First we  load the data (see the previous session for details):
+
+	\begin{lstlisting}
+mpdata = read.csv("FY_MPol_Data.csv", header=TRUE)
+head(mpdata)
+\end{lstlisting}
+
+	\item Then we tell R to treat the data column in the data frame as dates and not as strings of characters (see the previous session)
+\begin{lstlisting}
+mpdata[["date"]] <- as.Date(mpdata[["date"]])  
+\end{lstlisting}
+\newpage
+	\item We will be some creating graphs so we load ggplot from the library.
+\begin{lstlisting}
+library(ggplot2)
+\end{lstlisting}
+
+\newpage
+\subsection{Some economics: Monetarism.}
+	\item The equation we will be investigating is based on the simplest monetarist model
+	\begin{equation}
+	P = kM
+	\end{equation}
+	\begin{itemize}
+		\item This states that the price level (the CPI for example) is determined by the amount of money in the economy.
+		\item $k$ is a constant i.e. a number to be estimated, that accounts for the different scaling of $P$ and $M$ ($P$ is an index of the order of 100, while $M$ can be many billions).
+		\item The equation is potentially useful in explaining inflation since if $M$ increases by 5\% then $P$ must increase by 5\% too.
+		\item For example, if $k=0.1$ and $M=100$ we get $P = 0.1 \times 100 = 10$.
+		\item Then if the money supply grows by 5\% we get $P = 0.1 \times 105 = 10.5$ (i.e. 5\% greater than the previous 10)
+		\item We can use regression analysis to see whether this relationship holds in the data.
+\end{itemize}
+		\item But what data? What data should we use for $P$ and $M$?
+		\begin{itemize}
+			\item $P$ is quite straightforward - we'll use the Consumer Prices Index, or CPI.
+			\newpage
+			\item For $M$ things are a bit less obvious. monetarism is not clear about it means by $M$ so we usually use a couple of alternative measures:
+			\begin{itemize}
+				\item M1, which is mainly notes and coins and bank sight deposits (i.e. deposits from which withdrawals can be made without giving the bank advance notice)
+				\item M3, which is mainly m1 plus bank time deposits (for which notice of withdrawal is required)
+			\end{itemize}
+			\item The basic idea behind these is that M1 is money that people hold to finance daily purchases, while M3 contains an element of people's savings (which are less likely to be held for purchases in the short term).
+			\end{itemize}
+	\end{itemize}
+	\newpage
+	\subsection{Graph the data.}
+	\begin{itemize}
+	\item Before running a regression we have a look at a graph of the data. This will go some way towards telling us whether the data are consistent with our model.
+	\item From now on we'll use upper case letters for the variables in the theoretical equation, and lower case ones to represent the data series.
+\begin{lstlisting}
+ggplot(mpdata, aes(date)) + geom_line(aes(y=m1),colour="red") + 
+                              geom_line(aes(y=p*10),colour="blue") + 
+                              geom_line(aes(y=m3),colour="green") 
+\end{lstlisting} 
+	\begin{itemize}
+		\item This line creates the graph (with $P$ multiplied by 10 as in the previous session):
+	\end{itemize}
+		\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.6\linewidth]{mpdataPlot_PandM.pdf}
+  			\caption{ggplot of m1, m3 and p*10.}
+  			\label{fig:mpdataPlot_1}
+  			\end{center}
+	\end{figure}         % --------------------------------------------------------------------------------------
+
+	\item We can draw some rough conclusions from this:
+	\begin{itemize}
+		\item The relationship between m1 (red) and the price level (blue) does seem to fit with our equation rather well up to about 1982, it then fits less well until the Crisis, from which point it begins to look quite different.
+		\item The m3 (green), P relationship provides less support for our equation.
+		\item Very often graphical analysis like this leaves room for argument (although in this case the conclusions look quite clear).
+		\item The advantage of using regression analysis is that it is less subjective and it works when there are many variables to consider, not just 2 as in the example equation.  
+\end{itemize}
+
+\subsection{Run some regressions.}
+	\item So how do we persuade R to perform a regression? And more specifically, to regress $P$ on $M$?
+
+	\item First we tell R the variables we want in the regression, and what data to use to estimate it; we'll use the data we loaded as $p$ to represent $P$, and $m1$ to represent $M$.
+
+	
+\begin{lstlisting}
+mod1 <- lm(p~m1, data = mpdata)
+\end{lstlisting}
+	\begin{itemize}
+		\item Starting on the right of the arrow, `lm' stands for linear model (see the slides from the Bridging course last December if you are not familiar with the term `linear').
+		\item So we use lm() to tell R that we want to estimate a linear model, and we put the details of the model in the brackets:
+		\begin{itemize}
+			\item  We start with the variable names: p and m1. The dependent variable goes on the left of the $\sim$  and the explanatory variable goes on the right.
+			\item Then, after the comma, we tell R that we want it to get the data from the data frame `mpdata'.
+		\end{itemize}
+		\item We then use the arrow to tell R to place this linear model in its memory and to call it (our choice of name) mod1.
+\end{itemize}
+	\item Finally we run the regression using a rather unintuitive command, `summary()', into which we place the name of our model, i.e.
+\begin{lstlisting}
+summary(mod1) 
+\end{lstlisting}
+\newpage
+	 \item This gives us the following table of results in the console
+	 \lstinputlisting[language=R, backgroundcolor=\color{output}]{regression_mod1.txt}   
+	 	   
+
+	 \begin{itemize}
+	 	\item You may have to widen the console window before executing the `summary()' line to prevent the lines from wrapping - if they have, widen the window then run the line again. 
+	 	\item The first 2 lines just tell us that we have `called' (i.e. we have asked R to use) the linear model above i.e. p$\sim$m1, with data from data frame mpdata.
+	 	\item You can ignore the next 3 lines but, in case you're interested, they tell us something about the residuals. These are the gaps between the actual p data and the estimated model's best guess at what p should be in each period (more on this below). 
+\newpage
+	 	\item Then we get the regression equation results, which are (writing them as an equation rather than a table):
+	 	\begin{equation}
+	 	p_t = 23.31 + 0.002958 \times m_{1,t} + e_t  
+	 	\end{equation}
+	 	\item The new term $e_t$ is the residual in period $t$. The results table doesn't mention this explicitly (see the Bridging notes for more information on this).
+\newpage 
+	 	\item Note that R adds an element here: we wanted to estimate $P = kM$ but R actually estimated \[p = \mbox{Intercept} + km_1\] i.e. it added the element `Intercept' (also known as `the constant'). There are good technical reasons for its doing this which we won't go into here.
+	 	\item If you'd like to run the regression without the intercept add `-1' to the list of variables i.e.
+\begin{lstlisting}
+mod1 <- lm(p~m1-1, data = mpdata)
+summary(mod1)
+\end{lstlisting}
+\newpage
+	 	\item So our estimate of the Intercept is 23.31, and that of $k$ is 0.002958.
+	 	\item The estimates are followed in the table by some diagnostic statistics but all we need for now are the stars at the ends of the lines.
+	 	\item Both estimates get 3 stars which means e.g. that the probability that the true value value of $k$ (as opposed to our estimate of it) is zero is less than 1\%.
+	 	\item So we can be pretty sure that there is some relationship between $P$ and $M$ in the data.
+	 	\end{itemize}
+\end{itemize}
+
+\section{So the monetarist equation is supported by the data?} 
+\begin{itemize}
+	 	\item In one sense yes; the coefficient on $m_1$ in the estimated equation is positive which suggests that, in the data, increases in the money supply are related to increases in prices.
+		\item However, there is a more-general version of the monetarist equation:
+		\begin{equation}
+		P = c\left(\frac{M}{Y}\right)
+		\end{equation}
+		where $Y$ is the amount of goods produced in the economy in a given period of time.
+		\item This takes account of the possibility that for any level of the money supply, if the supply of goods increases, the prices of the goods may fall.  
+	 	\item To test this we estimate a longer equation, adding output (Y), which we represent with industrial production data $y$:
+\begin{lstlisting}
+mod2 <- lm(p~m1+y, data = mpdata)
+summary(mod2)
+\end{lstlisting}
+	\item Note that writing `m1 + y' here does not mean that $y$ must have a positive effect on $p$, it just means `add $y$ to the list of variables in the equation'.
+\newpage
+	 \item We get the following results:
+
+	 \lstinputlisting[language=R, backgroundcolor=\color{output}]{regression_mod2.txt}
+		\item The data don't seem to like this model very much because the estimated coefficient for $y$ is positive, the opposite of what the monetarist model predicts.
+	\end{itemize}
+	
+\section{So the monetarist equation is {\em not} supported by the data?}
+	\begin{itemize}
+		\item Well the equation is not dead yet. Let's try again but this time we'll use only data from the period for which  the graph suggested that the relationship between money and prices was strongest, roughly 1960 to 1985.
+		
+	 \item We do this by creating a new data frame (mpdata\_2) with just the periods we are interested in.
+	 	\begin{lstlisting}
+	 # --- Restrict the sample period
+mpdata_2 <- subset(mpdata, date > "1960-01-01" & date < "1985-01-01")
+mod3 <- lm(p~m1 + y, data = mpdata_2)
+summary(mod3)
+ \end{lstlisting}
+ \newpage
+ \item The results for the shorter period are:
+ \lstinputlisting[language=R, backgroundcolor=\color{output}]{regression_mod3.txt}
+ \newpage
+ 	\item This looks rather more supportive of the monetarist equation: prices are positively related to the money supply, and negatively related to the amount of goods produced.
+ 		\item Finally, you might object to estimating the equation
+ 		\begin{equation}
+ 		p = \mbox{Intercept} + k_1 m1 + k_2 y
+ 		\end{equation}
+ 		where the coefficients to be estimated are $k_1$ and $k_2$ in addition to the intercept.
+ 		\item The monetarist equation is actually based on the ratio of M and Y so we should be estimating
+ 		\begin{equation}
+ 		p = \mbox{Intercept} + k_3 \left( \frac{m1}{y} \right)
+ 		\end{equation}
+ 		\newpage
+ 		\item How do we do this? Well, because the symbol `+' is used inside lm() to indicate the addition of a variable to list of variables for the the equation to be estimated we can't use it to tell R to include the sum of two variables as a single regressor i.e. `m1 + y' means put m1 and y into the list of variables, it does not mean include the variable that is the sum of these two (m1+y) into the equation. This applies to all of the usual arithmetic symbols, including `/' (divide).
+ 		\item We use instead  `I(m1+y)'  to include the sum (which we won't do here of course) and `I(m1/y)' to include the ratio.
+ 		\item Thus the code we use is:
+ \begin{lstlisting}
+mod4 <- lm(p~I(m1/y), data = mpdata)
+summary(mod4)
+\end{lstlisting}
+ 	 \newpage
+ \lstinputlisting[language=R, backgroundcolor=\color{output}]{regression_mod4.txt}
+ \newpage
+ \item This looks quite supportive of the monetarist equation because the coefficient on the ratio is positive and has 3 stars (which implies that the estimated probability that the true coefficient is zero or negative is less than 1\%. 
+ \item There is a lot more that we should do to test the equation before declaring that the data support it but this is a good start, for the earlier period anyway.
+\end{itemize}
+
+\end{document}
+
+
+
+ 
+
+mod1 <- lm(p~m1, data = mpdata)
+summary(mod1)
+
+# --- Add more variables
+mod1 <- lm(p~m1+m3+y+u, data = mpdata)
+summary(mod1)
+
+
+# Plot the actual and fitted values
+
+p_fit <- mod1$fit   # Create a new variable equal to the fitted values (this is not necessary but makes things a bit clearer.)
+			  # The alternative is to add mod1$fit directly to the dataset in the next line.
+
+mpdata$p_fit <- p_fit   # This adds a new column called p_fit OR replaces the data if the column already exists.
+head(mpdata)
+
+ggplot(mpdata, aes(date)) + geom_line(aes(y=p),colour="blue") + geom_line(aes(y=p_fit),colour="red")
+
+
+
+
+
+# --- Restrict the sample period
+mpdata_2 <- subset(mpdata, date > "1960-01-01" & date < "1985-01-01")
+mod1 <- lm(p~m1, data = mpdata_2)
+summary(mod1)
+
+
+# --- Add more variables
+mod1 <- lm(p~m1+m3, data = mpdata)
+summary(mod1)
+
+
+# --- Add lagged variables
+
+
+# Create some lagged series
+library(dplyr)   # We need this package for lagging the data.
+
+
+lag_p  = lag(mpdata$p,1)
+lag_m1 = lag(mpdata$m1,1)
+lag_m3 = lag(mpdata$m3,1)
+
+# Add the lagged variables to the dataframe
+mpdata$lag_p  <- lag_p
+mpdata$lag_m1 <- lag_m1
+mpdata$lag_m3 <- lag_m3
+
+ggplot(mpdata, aes(date)) + geom_line(aes(y=p-lag_p),colour="blue") 
+
+mod2 <- lm(p~lag_p, data = mpdata)
+summary(mod2)
+
+mod3 <- lm(p~lag_p+m1, data = mpdata)
+summary(mod3)
+
+# It fits the price level quite well, but what about fitting the inflation rate?
+
+infl <- (mpdata$p - lag_p) / lag_p                # Quiz: Why do we need the 'mpdata$' attached to p but not to lag_p?
+m1growth <- (mpdata$m1 - lag_m1) / lag_m1
+lag_m1growth <- lag(m1growth,1)
+
+mpdata$infl  <- infl
+mpdata$m1growth  <- m1growth
+mpdata$lag_m1growth  <- lag_m1growth
+
+
+mod4 <- lm(infl~m1growth+lag_m1growth, data = mpdata)
+summary(mod4)
+
+# --- Restrict the sample period
+mpdata_2 <- subset(mpdata, date > "1960-01-01" & date < "1985-01-01")
+mod5 <- lm(infl~m1growth+lag_m1growth, data = mpdata_2)
+summary(mod5)
+mod6 <- lm(infl~lag_m1growth, data = mpdata_2)
+summary(mod6)
+
+
+# Plot actual and fitted values when the model includes lags of the dependent variable. i.e. p = a*lag_p + b*m.
+
+mpdata_3 <- subset(mpdata, date >= "1960-02-01" & date <= "2019-10-01") # Creates a new df without the first row of the original. We do this because there is no fitted value from the model for the first period when we have a 1-period lag of the dependent variable included on the rhs..
+
+p_fit <- mod3$fit   # We are using the fitted values from mod3 above.
+
+mpdata_3$p_fit <- p_fit
+
+ggplot(mpdata_3, aes(date)) + geom_line(aes(y=p),colour="blue") + geom_line(aes(y=p_fit),colour="red") + geom_line(aes(y=p-p_fit),colour="green")
+
+	# The green line here shows the differences between the actual and fitted values.
+
+
+
+
+
+
+\end{document}
+	
+\begin{lstlisting}
+#
+# importDataFromCSV.R
+# 
+# Import (or 'load') data from a CSV file.
+#
+# DGB Mar 2020
+#
+\end{lstlisting}
+
+\begin{lstlisting}
+#   Load data from csv with the top row of the csv used as column headers.
+monPolData <- read.csv("monPol_1.csv",header=TRUE)
+\end{lstlisting}
+
+
+	\item And this is what we get in the console:
+	\lstinputlisting[language=R]{monPolData.out}
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+# Print just 1 column
+monPolData$bank
+
+# Print just 1 row (you'll get the header too)
+
+monPolData[1,]
+monPolData[2,]
+
+# Print just one element 
+monPolData[2,3]
+
+# How different do things look if we don't make the first line of the CSV file into a header in R?
+----------
+\begin{lstlisting}
+#   Load data from csv with the top row of the csv used as the first row of the columns with column headers added by R (as V#).
+monPolData_noHeader <- read.csv("monPol_1.csv",header=FALSE)
+\end{lstlisting}
+monPolData
+
+monPolData_noHeader
+
+
+# --------------- Load larger data set (from Radziwill book)
+
+# Load data from csv with variable names as headers from the top row of the csv.
+mnmData <- read.csv("mnm-clean.csv",header=TRUE)
+mnmData_noHeader <- read.csv("mnm-clean.csv",header=FALSE)
+
+# Look at the data...
+
+#       The whole dataset
+mnmData
+
+#       Just the first 6 rows
+head(mnmData)
+
+#       What difference does including a 'header' make?
+head(mnmData_noHeader)
+
+
+# Print one of the columns
+mnmData$student
+
+
+
+
+\section{Earlier text}
+
+
+\begin{enumerate}
+		\item Import data from a spreadsheet or a `Comma Separated Values' (CSV) file :
+		\begin{enumerate}
+			\item See the \href{https://www.datacamp.com/community/tutorials/r-data-import-tutorial#csv}{Datacamp site} for a comprehensive guide.
+			\item Spreadsheet \textcolor{red}{[mnm-clean.xlsx]}: Export the data as a CSV file \textcolor{red}{[mnm-clean.csv]}.  (File$$>$$Export$$>$$Change File Type$$>$$CSV (Comma delimited))
+			\item CSV:  \textcolor{red}{[importDataFromCSV.R]}
+		\end{enumerate}
+		\begin{figure}[H]
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/Excel_mnmData.png}
+  			\caption{Data in Excel.}
+  			\label{fig:dataExcel}
+  			\end{center}
+		\end{figure}
+		\begin{figure}[H]
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/R_mnmData.png}
+  			\caption{Data in R.}
+  			\label{fig:dataR}
+  			\end{center}
+		\end{figure}
+		\item Data imported in this way are stored in R in something called a `data frame'; more on what this means below.
+\end{enumerate}
+
+
+\end{document}

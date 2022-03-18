@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+\usepackage{rotating}
+
+\usepackage{hyperref}
+
+\usepackage{float}
+\usepackage[svgnames]{xcolor}
+\usepackage{listings}
+\lstset{language=R,
+    basicstyle=\small\ttfamily,
+    stringstyle=\color{DarkGreen},
+    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+    morekeywords={TRUE,FALSE},
+    deletekeywords={data,frame,length,as,character},
+    keywordstyle=\color{blue},
+    commentstyle=\color{DarkGreen},
+}
+\usepackage{xcolor}
+\definecolor{red}{rgb}{153,0,153}
+\definecolor{blue}{rgb}{0,0,153}
+
+\begin{document}
+\Large
+
+\section{Importing the contents of a small CSV file.}
+	
+	
+% PRINT R CODE	
+\begin{lstlisting}
+#
+# importDataFromCSV.R
+# 
+# Import (or 'load') data from a CSV file.
+#
+# DGB Mar 2020
+#
+\end{lstlisting}
+
+\begin{lstlisting}
+#   Load data from csv with the top row of the csv used as column headers.
+monPolData <- read.csv("monPol_1.csv",header=TRUE)
+\end{lstlisting}
+
+
+% PRINT A FILE
+	\lstinputlisting[language=R]{monPolData.out}
+
+

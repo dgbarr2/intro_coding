@@ -1,0 +1,41 @@
+101
+http://intranet/Banknav/IML.asp?svr=BOE-DMS&db=Analytical&id=8197387&v=1
+
+102
+http://intranet/Banknav/IML.asp?svr=BOE-DMS&db=Analytical&id=8197382&v=1
+
+103
+http://intranet/Banknav/IML.asp?svr=BOE-DMS&db=Analytical&id=8197383&v=1
+
+104
+http://intranet/Banknav/IML.asp?svr=BOE-DMS&db=Analytical&id=8197384&v=1
+
+105
+http://intranet/Banknav/IML.asp?svr=BOE-DMS&db=Analytical&id=8197385&v=1
+
+106
+http://intranet/Banknav/IML.asp?svr=BOE-DMS&db=Analytical&id=8197395&v=1
+
+
+
+Introduction to Coding in R - Markets and Banking
+
+
+
+
+There are 6 coding topics in this module, all of which include markets-related material. The required topics are  FY2020_Markets_101_Bonds_PricesAndYields and Section 2 of FY2020_Markets_106_MCarloAndOptions, which describes a European call option. The other topics are for you to work through if you have the time and interest. The two "YieldCurve" topics are probably the most useful from a non-coding perspective, although they do contain some code for those interested in reproducing the charts and understanding the Expectations Hypothesis. The remaining pair, on coupon bonds and options contain some more-advanced coding - if you want to develop your coding skills they are worth working through (and emailing me if you get stuck or bewildered!).
+
+
+
+
+
+
+
+
+Topic 10.1 Bonds: Prices and Yields
+
+
+
+
+
+
