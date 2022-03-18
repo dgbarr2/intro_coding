@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+
+\newcommand{\EventTitle}{Foundation Year, Coding in R}
+\newcommand{\PresentationTitle}{3. Installing, starting and stopping R Studio}
+\newcommand{\EventDate}{May 2020}
+
+\input{C:/Users/320709/Documents/FY2019-20/FY2020_Rcourse/Presentations/IndividualSessions/templates//templateForSlides}
+
+
+\newpage
+	
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+	\newpage
+\LARGE
+
+
+\section{Introduction}
+\begin{itemize}
+	\item These slides show you how too install R and get it up and running.
+	\item The process is quite simple but it can be a bit daunting if you are not familiar with this sort of thing.
+	\item If it goes wrong, and you can't see why, your safest bet is probably to go back to the beginning of the Section of these notes that you have reached and start again.
+	\item If that fails, send me an email or call a friend - there is always a way to escape a difficulty, you just have to know someone who knows.
+	\newpage
+	\item Text written in \textcolor{blue}{blue} should be typed into your machine exactly as it is in these slides except where it is a `\textcolor{blue}{+}': this just means hit the two keys either side of the symbol at the same time.
+	\item In the screenshots below the important areas are circled in red, with 1 or 2 exceptions.
+	\end{itemize}  
+
+\section{Installing R on your Bank laptop.}
+\begin{enumerate}
+\item Click the windows icon.
+
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.6\linewidth]{ScreenShots/windowsIcon.png}
+  			\caption{Click the Windows icon.}
+  			\label{fig:dataR}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+
+
+\item Click the Software Center icon
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.7\linewidth]{ScreenShots/selectSoftwareCenter_v2.png}
+  			\caption{Click the Software Center icon.}
+  			\label{fig:dataR}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+
+\newpage
+\item Type `R 3.5' in the search window and hit $<$Enter$>$.
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.7\linewidth]{ScreenShots/R3point5.png}
+  			\caption{Search for R.}
+  			\label{fig:dataR}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+
+\item You should now see an R icon: left-click it once to open the installation page.
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.6\linewidth]{ScreenShots/foundSt.png}
+  			\caption{Click the R icon.}
+  			\label{fig:dataR}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+\newpage
+\item On the R installation page click `Install'. Installation can take several minutes.
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.6\linewidth]{ScreenShots/installRSt.png}
+  			\caption{Click `Install' and get a coffee.}
+  			\label{fig:dataR}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+
+\item When the installation is complete  the status line (see the blue circle in Figure \ref{fig:dataRsuccess}) will change from `Status: Available' to `Status: Installed' and the `Install' button will change to `Uninstall' (don't click it!). 
+\begin{itemize}
+	\item You may find that the window just closes when the installation is complete, which is fine, it happens sometimes. 
+\end{itemize}
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.6\linewidth]{ScreenShots/RisInstalled.png}
+  			\caption{This time it worked!}
+  			\label{fig:dataRsuccess}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+
+	\item We will check that the installation was successful in the next Section. 
+	\item You can now close any windows related to the installation process.
+\end{enumerate}
+
+\section{Starting R Studio.}
+
+Using R Studio is just one of several ways to run R.  Since most people prefer R Studio to the others this is the one we use here.  So, we continue...
+
+
+\begin{enumerate}
+\item Click the Windows icon again and scroll down the menu of apps to the alphabetical-R section.
+\item Ignore the `R' folder icon...
+\newpage
+\item ...and open the `R Studio' drop-down by clicking its folder icon or the down arrow to its right.
+
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.5\linewidth]{ScreenShots/applicationsList_Rarrow.png}
+  			\caption{Click the down arrow to reveal the R Studio icon.}
+  			\label{fig:dataR}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+
+
+\newpage
+\item The R Studio icon should appear...
+
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.5\linewidth]{ScreenShots/iconRStToDrag.png}
+  			\caption{The R Studio icon.}
+  			\label{fig:dataR}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+
+\newpage
+\item If you wish you can pin the icon to the Taskbar at the foot of the screen by...left-click and hold on the icon, then drag.
+
+\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.5\linewidth]{ScreenShots/iconRdragged.png}
+  			\caption{R Studio pinned to the Taskbar - optional.}
+  			\label{fig:dataR}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+\newpage
+\item Click the R Studio icon on the start menu, or on the Taskbar, to open it.  R Studio will start up; it may take a couple of minutes to present you with something like this...
+	\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.6\linewidth]{ScreenShots/RevisedRscreens/firstStartUp_2.png}
+  			\caption{R Studio opening screen.}
+  			\label{fig:dataR_1}
+  			\end{center}
+\end{figure}         % --------------------------------------------------------------------------------------
+
+\end{enumerate}
+
+
+
+\section{Closing R Studio.}
+\begin{itemize}
+	
+	\item Closing R Studio is referred to by R Studio as quitting the session. You can do this in any of 3 ways:
+	\begin{enumerate}
+		\item At the top left of the R Studio window click  File $>$ Quit Session
+		\item Click the $\times$ at the top right of the R Studio window.
+		\item Hit $<$Ctrl$>$ + $<$q$>$
+	\end{enumerate}
+	\item If R asks if you want to save the `Environment' or the `Workspace' click `No'.
+\end{itemize}
+
+\end{document}
+
+
