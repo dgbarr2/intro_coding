@@ -1,0 +1,94 @@
+\documentclass[12pt]{article}
+
+\newcommand{\EventTitle}{Foundation Year, Coding in R}
+\newcommand{\PresentationTitle}{2. Setting up your folders}
+\newcommand{\EventDate}{May 2020}
+
+\input{C:/Users/320709/Documents/FY2019-20/FY2020_Rcourse/Presentations/IndividualSessions/templates//templateForSlides}
+
+
+\newpage
+	
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+	\newpage
+\LARGE
+
+
+\section{Why do we need to set up folders for R?}
+\begin{itemize}
+	\item Strictly speaking we don't have to set up any folders but life is easier if we do.
+	\item Having folders for your R code files, for the data they use and for the output they produce will make the management of your R work much easier.
+	\item I will assume that you have set up your folders as set out below. Even if you have enough experience of coding to set your own up differently, using this setup makes sense since I will refer to its components from time to time.  
+	\newpage
+	\item The first folder to create, in Documents, is FY\_Rcourse.
+		\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/FoldersLevel1.png}
+  			\caption{The FY\_Rcourse folder in Documents.}
+  			\label{fig:mpdataPlot_1}
+  			\end{center}
+	\end{figure}         % --------------------------------------------------------------------------------------
+	\newpage
+	\item Then in FY\_Rcourse create the following 3 folders:
+	\begin{figure}[H]  % --------------------------------------------------------------------------------------
+			\begin{center}
+  			\includegraphics[width=0.8\linewidth]{ScreenShots/FoldersLevel2.png}
+  			\caption{The 3 code and data folders in FY\_Rcourse.}
+  			\label{fig:mpdataPlot_1}
+  			\end{center}
+	\end{figure}         % --------------------------------------------------------------------------------------
+	\end{itemize}
+	\section{Managing code and data files}
+	\begin{itemize}
+	\item I suggest that you place the data and code that you download from Moodle (or receive by email) in the courseCode and courseData folders.
+		\begin{itemize}
+		\item These will serve as repositories for the downloads so that you don't have to download them again - they are not for editing or changing in any way. 
+		\end{itemize}
+		\item Then copy any of the code and data files that we are working with as we go through the sessions into myCodeAndData - we will edit these code files in the process of learning how R works.
+		\newpage
+		\item I suggest that you rename the code files in myCodeAndData as follows: if the course code file is `Filename.R' call the copy `myFilename.R'
+		\begin{itemize}
+			\item This is not necessary but it will make it less likely that you will edit the original course code file by mistake.
+		\end{itemize}
+		\item There is no need to rename the course {\em data} files since you will not be asked to edit those.
+		\item If something goes wrong with your editing of myFilename.R, just delete it and make another copy from the Filename.R version in courseCode.
+\end{itemize}
+	\section{Your `working directory' for R}
+	\begin{itemize}
+		\item We have to tell R where to find the files we will be working with, and where to save any new ones that we create. R refers to this as the `working directory'. We shall use the  `myCodeAndData' folder as the working directory.
+		\item The instruction we use to set this up is:
+\begin{lstlisting}
+setwd("C:/Users/320709/Documents/FY_Rcourse/myCodeAndData")
+\end{lstlisting}
+	   with 320709 replaced by your own Bank id number.
+	  \item We will look at how and where to enter this code later (in the `SettingYourWorkingDirectory' slides).
+	\end{itemize}
+	
+	
+	\end{document}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
