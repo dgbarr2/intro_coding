@@ -1,0 +1,282 @@
+%\documentclass[12pt]{article}
+
+\usepackage{rotating}
+
+\usepackage{hyperref}
+
+\usepackage{float}
+\usepackage[svgnames]{xcolor}
+
+
+
+\usepackage{listings}
+\lstset{language=R,
+    basicstyle=\large\ttfamily,
+    stringstyle=\color{DarkGreen},
+    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+    morekeywords={TRUE,FALSE},
+    deletekeywords={data,frame,length,as,character},
+    keywordstyle=\color{blue},
+    commentstyle=\color{DarkGreen},
+    frame=shadowbox,
+    rulesepcolor=\color{lightgray},
+    backgroundcolor=\color{myyellow},
+}
+\usepackage[margin=0.3in]{geometry}
+
+\usepackage{xcolor}
+\definecolor{red}{rgb}{153,0,153}
+\definecolor{blue}{rgb}{0,0,153}
+\definecolor{pink}{RGB}{239,231,231}
+\definecolor{myyellow}{RGB}{255,255,204}
+
+
+
+
+\usepackage{subfig}
+\usepackage{etex}
+\reserveinserts{18}
+%usepackage{morefloats}
+
+
+
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+
+\usepackage{tikz}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+
+
+
+\definecolor{MauveDGB}{rgb}{112,108,176}
+\definecolor{DGBred}{rgb}{112,108,176}
+\usepackage{xspace,colortbl}
+
+
+
+\usepackage[official]{eurosym}
+
+\DeclareGraphicsRule{*}{mps}{*}{}
+
+\usepackage{tabularx}
+
+\usetikzlibrary[topaths]
+
+
+
+
+
+\newcount\mycount
+
+
+
+
+% ------------
+\usepackage{helvet}
+\usepackage{xspace,colortbl}
+
+
+\usepackage{graphicx}
+
+\usepackage{xcolor}
+\include{imagesEtc/rgb}
+\usepackage{sectsty}
+\usepackage{float}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
+\usepackage{tabularx}
+
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{fancybox}
+
+
+\usepackage[screen,code,sectionbreak]{pdfscreen}
+\begin{screen}
+	\margins{.65in}{.65in}{.65in}{.65in}
+	\screensize{6.25in}{10in}
+	%\changeoverlay
+	%\paneloverlay{aquagraphite.jpg}
+	%\overlay{mac3.pdf}
+	\def\pfill{\vskip6pt}
+\end{screen}
+
+\begin{print}
+	\setlength{\oddsidemargin}{0in}
+	\setlength{\textwidth}{7in}
+	\setlength{\topmargin}{-.5in}
+	\setlength{\textheight}{9in}
+\end{print}
+
+
+% ------------------------------
+% Alter some LaTeX defaults for better treatment of figures:
+% See p.105 of "TeX Unbound" for suggested values.
+% See pp. 199-200 of Lamport's "LaTeX" book for details.
+%   General parameters, for ALL pages:
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+%   Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}     % 2 may work better
+\setcounter{dbltopnumber}{2}    % for 2-column pages
+\renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+\renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+%   Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+% remember to use [htp] or [htpb] for placement
+
+% ------------------------------
+
+
+
+% ------------------------------
+\begin{document}
+	\fontfamily{phv}\selectfont
+	\overlay{imagesEtc/stripes} 
+	\paneloverlay{mac4} \paneloverlay{aquagraphite}
+	
+	\fontfamily{phv}\selectfont
+	%\overlay{stripes} 
+	\paneloverlay{mac4} \paneloverlay{aquagraphite}
+	
+	\definecolor{BlueGreen}{rgb}{0, 0.3686, 0.4314}
+	\definecolor{Burgundy}{RGB}{112,108,176}
+	\definecolor{olive}{rgb}{0.4118, 0.5725, 0.2275}
+	\definecolor{red}{RGB}{71,170,156}
+	\definecolor{DGBred}{RGB}{71,170,156}
+	
+	\definecolor{section0}{RGB}{112,108,176}
+	\definecolor{section1}{RGB}{112,108,176}    
+	\definecolor{section2}{RGB}{71,170,156}
+	\definecolor{section3}{rgb}{.000,.488,.278}
+	\definecolor{section4}{rgb}{.000,.371,.000}
+	\definecolor{section5}{rgb}{.000,.212,.000}
+	
+	\definecolor{scarlet}{rgb}{255,0,0}
+	
+	\sectionfont{\color{red}}
+	\subsectionfont{\color{Burgundy}}
+	\subsubsectionfont{\color{blue!50!white}}
+	
+	
+	\begin{screen}
+		\begin{titlepage}
+			\definecolor{BlueGreen}{rgb}{0, 0.3686, 0.4314}
+			\definecolor{Burgundy}{RGB}{112,108,176}
+			
+			
+			%\tikz [remember picture,overlay]
+			%  \node [yshift=0.06\paperheight,xshift=0.185\paperwidth,inner sep=0pt] at (current page.south west)
+			%{\includegraphics[width=0.35\paperwidth,height=0.1\paperheight]{boelogo.png}};
+			
+			\tikz [remember picture,overlay]
+			\node [yshift=0.5\paperheight,xshift=0.26\paperwidth,inner sep=0pt] at (current page.south west){\begin{minipage}{0.4\paperwidth}\raggedright    \textcolor{red}{\textbf {\EventTitle}} \end{minipage}};
+			
+			
+			
+			\tikz [remember picture,overlay]
+			\node [yshift=-0.64\paperheight,xshift=0.26\paperwidth,inner sep=0pt] at (current page.north west){\begin{minipage}{0.4\paperwidth}\raggedright       \LARGE \textcolor{Burgundy}{\fontsize{26}{20}\selectfont \PresentationTitle} \end{minipage}};
+			
+			
+			\tikz [remember picture,overlay]
+			\node [xshift=-0.21\paperwidth, yshift=-0.21\paperheight, inner sep=0pt] at  (current page.north)
+			{\includegraphics[width=0.5\paperwidth,height=0.42\paperheight]{imagesEtc/CCBS_greenGlass.jpg}};
+			
+			\tikz [remember picture,overlay]
+			\node [yshift=-0.42\paperheight,xshift=0.21\paperwidth,inner sep=0pt] at (current page.north west)
+			{\includegraphics[height=0.1\paperheight,width=0.3\paperwidth]{imagesEtc/BankLogoGrey.pdf}};
+			
+			
+			
+			%\tikz [remember picture,overlay]
+			%\draw (-0.75\paperwidth,-0.5\paperheight) -- (.5\paperwidth,-0.0\paperheight)}
+			
+			\tikz [remember picture,overlay]
+			{\draw[line width = 0.9mm,color=red] (0.442\paperwidth,-0.23\paperheight) -- (0.842\paperwidth,-0.23\paperheight)}
+			
+			
+			
+			
+			
+			%Date
+			%    \tikz [remember picture,overlay]
+			%  \node [yshift=-0.55\paperheight,xshift=-0.38\paperwidth,inner sep=0pt] at (current page.north east){\Large \textcolor{red}{\begin{tabular}{l}
+			%     \textbf{Date} \\
+			%      31 May 2016
+			%   \end{tabular}}};
+			
+			% -------------------------------- Date/Author etc
+			
+			\bgroup
+			\def\arraystretch{1.5}
+			\tikz [remember picture,overlay]
+			\node [yshift=-0.55\paperheight,xshift=-0.35\paperwidth,inner sep=0pt] at (current page.north east){\begin{minipage}[c]{0.2\paperwidth} \textcolor{red}{\begin{tabular}{l}
+							\textbf{\textcolor{Burgundy}{Date}} \\
+							\EventDate
+			\end{tabular}}\end{minipage}};
+			\egroup 
+			
+			
+			%Separating line 2
+			\tikz [remember picture,overlay]
+			{\draw[color=red] (0.442\paperwidth,-0.27\paperheight) -- (0.842\paperwidth,-0.27\paperheight)}
+			
+			%Presenter name
+			\bgroup
+			\def\arraystretch{1.5}
+			\tikz [remember picture,overlay]
+			\node [yshift=-0.64\paperheight,xshift=-0.35\paperwidth,inner sep=0pt] at (current page.north east){\begin{minipage}[c][0.1in]{0.2\paperwidth} \textcolor{red}{\begin{tabular}{l}
+							\textbf{\textcolor{Burgundy}{Author}} \\
+							David Barr
+			\end{tabular}}\end{minipage}};
+			\egroup
+			
+			%
+			% %   \tikz [remember picture,overlay]
+			%   \node [yshift=-0.64\paperheight,xshift=-0.35\paperwidth,inner sep=0pt] at (current page.north east){\begin{minipage}[c][0.1in]{0.2\paperwidth} \textcolor{red}{
+			%       \bf {Author}
+			%      \noindent David Barr
+			%   }\end{minipage}};
+			
+			
+			
+			
+			%Separating line 3
+			\tikz [remember picture,overlay]
+			{\draw[color=red] (0.442\paperwidth,-0.30\paperheight) -- (0.842\paperwidth,-0.30\paperheight)}
+			
+			%Presenter email
+			\tikz [remember picture,overlay]
+			\node [yshift=-0.71\paperheight,xshift=-0.35\paperwidth,inner sep=0pt] at (current page.north east){\begin{minipage}[c][0.1in]{0.2\paperwidth} \textcolor{red}{\begin{tabular}{l}
+							david.barr@bankofengland.co.uk
+			\end{tabular}}\end{minipage}};
+			
+			%Disclaimer
+			%    \tikz [remember picture,overlay]
+			%   \node [yshift=0.06\paperheight,xshift=-0.27\textwidth,inner sep=0pt] at (current page.south east){\begin{minipage}{0.43\paperwidth}\raggedright  %\scriptsize The Bank of England does not accept any liability for misleading or
+			%        inaccurate information or omissions in the information provided.\end{minipage}};
+			
+		\end{titlepage}
+	\end{screen}
+	
+	\begin{screen}
+		\overlay{imagesEtc/stripes} %\paneloverlay{mac4} %\paneloverlay{aquagraphite}
+		\LARGE
+		\bf                                                                                                                                                                           
+	\end{screen}                                                                                                                                                                  
+	
+	
+	
+
+
+
